@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Aryan Robotics Control</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #facc15;
+}
+
+.container {
+  max-width: 400px;
+  margin: 60px auto;
+  background: #020617;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #facc15;
+}
+
+h2 {
+  text-align: center;
+  color: #facc15;
+}
+
+input, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+}
+
+input {
+  background: #020617;
+  color: #facc15;
+  border: 1px solid #facc15;
+}
+
+button {
+  background: #facc15;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #fde047;
+}
+
+.hidden {
+  display: none;
+}
+
+.panel button {
+  margin-top: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN BOX -->
+<div class="container" id="loginBox">
+  <h2>Owner Login</h2>
+  <input type="password" id="loginPass" placeholder="Enter Password">
+  <button onclick="login()">Login</button>
+</div>
+
+<!-- CONTROL PANEL -->
+<div class="container hidden" id="panel">
+  <h2>Aryan Robotics & IoT</h2>
+
+  <div class="panel">
+    <button>Arduino Control</button>
+    <button>Robotics System</button>
+    <button>IoT Dashboard</button>
+  </div>
+
+  <hr>
+
+  <h3>Change Password</h3>
+  <input type="password" id="newPass" placeholder="New Password">
+  <button onclick="changePassword()">Update Password</button>
+
+  <button style="margin-top:15px;background:red;color:white;" onclick="logout()">Logout</button>
+</div>
+
+<script>
+// PASSWORD MEMORY SYSTEM
+let storedPass = localStorage.getItem("ownerPass");
+
+if (!storedPass) {
+  localStorage.setItem("ownerPass", "aryanSingh(8");
+}
+
+// LOGIN FUNCTION
+function login() {
+  let input = document.getElementById("loginPass").value;
+  let realPass = localStorage.getItem("ownerPass");
+
+  if (input === realPass) {
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("panel").classList.remove("hidden");
+  } else {
+    alert("Wrong Password!");
+  }
+}
+
+// CHANGE PASSWORD
+function changePassword() {
+  let newP = document.getElementById("newPass").value;
+
+  if (newP.length < 4) {
+    alert("Password too short");
+    return;
+  }
+
+  localStorage.setItem("ownerPass", newP);
+  alert("Password Changed Successfully");
+}
+
+// LOGOUT
+function logout() {
+  location.reload();
+}
+</script>
+
+</body>
+</html>

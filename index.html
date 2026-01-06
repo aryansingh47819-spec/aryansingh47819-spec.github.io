@@ -2,237 +2,148 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Aryan Robotics & IoT</title>
+<title>Aryan Control Panel</title>
 
 <style>
 body{
   margin:0;
-  font-family:Arial, sans-serif;
-  background:#f8fafc;
-  color:#1e293b;
-}
-
-header{
-  background:#0f172a;
+  font-family: Arial, sans-serif;
+  background:#020617;
   color:#facc15;
-  padding:15px;
-  text-align:center;
-  font-size:22px;
-  font-weight:bold;
 }
-
 .container{
-  max-width:900px;
+  max-width:95%;
   margin:20px auto;
-  padding:20px;
-}
-
-.hidden{display:none;}
-
-.login-box{
-  max-width:400px;
-  margin:80px auto;
-  padding:20px;
-  border:2px solid #0f172a;
+  background:#020617;
+  padding:15px;
   border-radius:10px;
-  background:white;
+  box-shadow:0 0 15px #facc15;
 }
-
-input,button{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  font-size:16px;
-}
-
-button{
-  background:#0f172a;
-  color:#facc15;
-  border:none;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-button:hover{
-  background:#020617;
-}
-
-.nav{
-  display:flex;
-  gap:10px;
-  margin-bottom:20px;
-}
-
-.nav button{
-  flex:1;
-}
-
-.search{
-  margin-bottom:15px;
-}
-
-.code-item{
-  border:1px solid #0f172a;
-  border-radius:5px;
-  margin-bottom:10px;
-  padding:10px;
-  cursor:pointer;
-  background:#f1f5f9;
-}
-
-.code-item pre{
-  display:none;
-  background:#020617;
-  color:#facc15;
-  padding:10px;
-  overflow:auto;
-}
-
-.footer{
-  margin-top:40px;
+h2,h3{
   text-align:center;
-  font-size:14px;
-  color:#475569;
 }
+input,button,textarea{
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  border-radius:6px;
+  font-size:15px;
+}
+input,textarea{
+  background:#020617;
+  color:#facc15;
+  border:1px solid #facc15;
+}
+textarea{
+  min-height:200px;
+  font-family: monospace;
+}
+button{
+  background:#facc15;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:hover{background:#fde047;}
+.hidden{display:none;}
+.sectionBtn{margin-top:12px;}
 </style>
 </head>
 
 <body>
 
-<header>Aryan Robotics • Arduino • IoT</header>
-
 <!-- LOGIN -->
-<div class="login-box" id="loginBox">
-  <h3>Owner Login</h3>
-  <input type="password" id="loginPass" placeholder="Enter password">
-  <button onclick="login()">Login</button>
+<div class="container" id="loginBox">
+<h2>Owner Login</h2>
+<input type="password" id="loginPass" placeholder="Enter Password">
+<button onclick="login()">Login</button>
 </div>
 
-<!-- MAIN PANEL -->
+<!-- PANEL -->
 <div class="container hidden" id="panel">
+<h2>Aryan Arduino | Robotics | IoT</h2>
 
-  <div class="nav">
-    <button onclick="showSection('arduino')">Arduino</button>
-    <button onclick="showSection('robotics')">Robotics</button>
-    <button onclick="showSection('iot')">IoT</button>
-  </div>
+<button class="sectionBtn" onclick="openSection('arduino')">Arduino</button>
+<button class="sectionBtn" onclick="openSection('robotics')">Robotics</button>
+<button class="sectionBtn" onclick="openSection('iot')">IoT</button>
 
-  <input class="search" id="search" placeholder="Search code..." onkeyup="searchCode()">
-
-  <!-- ARDUINO -->
-  <div id="arduino" class="section">
-    <div class="code-item" onclick="toggleCode(this)">
-      IR Sensor Code
-      <pre>
-int ir=2;
-void setup(){ pinMode(ir,INPUT); Serial.begin(9600); }
-void loop(){ Serial.println(digitalRead(ir)); }
-      </pre>
-    </div>
-
-    <div class="code-item" onclick="toggleCode(this)">
-      LED Blink
-      <pre>
-void setup(){ pinMode(13,OUTPUT); }
-void loop(){ digitalWrite(13,HIGH); delay(500); digitalWrite(13,LOW); delay(500); }
-      </pre>
-    </div>
-  </div>
-
-  <!-- ROBOTICS -->
-  <div id="robotics" class="section hidden">
-    <div class="code-item" onclick="toggleCode(this)">
-      Obstacle Avoiding Robot
-      <pre>
-if(distance<20){ stop(); turn(); }
-      </pre>
-    </div>
-
-    <div class="code-item" onclick="toggleCode(this)">
-      Line Follower
-      <pre>
-if(L==0 && R==0) forward();
-      </pre>
-    </div>
-  </div>
-
-  <!-- IOT -->
-  <div id="iot" class="section hidden">
-    <div class="code-item" onclick="toggleCode(this)">
-      ESP8266 WiFi Connect
-      <pre>
-WiFi.begin(ssid,password);
-      </pre>
-    </div>
-
-    <div class="code-item" onclick="toggleCode(this)">
-      Firebase Send Data
-      <pre>
-Firebase.setInt("value",sensor);
-      </pre>
-    </div>
-  </div>
-
-  <hr>
-
-  <h3>Change Owner Password</h3>
-  <input type="password" id="newPass" placeholder="New password">
-  <button onclick="changePassword()">Change Password</button>
-
-  <button style="background:red;color:white;margin-top:10px;" onclick="logout()">Logout</button>
-
+<!-- ARDUINO -->
+<div id="arduino" class="hidden">
+<h3>Arduino Code</h3>
+<textarea id="arduinoCode" placeholder="Paste Arduino code here"></textarea>
+<button onclick="saveCode('arduinoCode')">Save</button>
 </div>
 
-<div class="footer">
-© Aryan Singh • GitHub Pages
+<!-- ROBOTICS -->
+<div id="robotics" class="hidden">
+<h3>Robotics Code</h3>
+<textarea id="roboticsCode" placeholder="Paste Robotics code here"></textarea>
+<button onclick="saveCode('roboticsCode')">Save</button>
+</div>
+
+<!-- IOT -->
+<div id="iot" class="hidden">
+<h3>IoT Code</h3>
+<textarea id="iotCode" placeholder="Paste IoT code here"></textarea>
+<button onclick="saveCode('iotCode')">Save</button>
+</div>
+
+<hr>
+
+<h3>Change Password</h3>
+<input type="password" id="newPass" placeholder="New Password">
+<button onclick="changePassword()">Update Password</button>
+
+<button style="background:red;color:white;margin-top:15px" onclick="logout()">Logout</button>
 </div>
 
 <script>
-/* PASSWORD MEMORY */
+// PASSWORD MEMORY
 if(!localStorage.getItem("ownerPass")){
   localStorage.setItem("ownerPass","aryanSingh(8");
 }
 
-/* LOGIN */
+// LOGIN
 function login(){
-  if(document.getElementById("loginPass").value===localStorage.getItem("ownerPass")){
-    document.getElementById("loginBox").classList.add("hidden");
-    document.getElementById("panel").classList.remove("hidden");
-  }else{
-    alert("Wrong password");
-  }
+  let p=document.getElementById("loginPass").value;
+  if(p===localStorage.getItem("ownerPass")){
+    loginBox.classList.add("hidden");
+    panel.classList.remove("hidden");
+    loadCodes();
+  }else alert("Wrong Password");
 }
 
-/* LOGOUT */
-function logout(){ location.reload(); }
-
-/* CHANGE PASSWORD */
-function changePassword(){
-  let p=document.getElementById("newPass").value;
-  if(p.length<4){ alert("Password too short"); return; }
-  localStorage.setItem("ownerPass",p);
-  alert("Password changed");
-}
-
-/* SECTION SWITCH */
-function showSection(id){
-  document.querySelectorAll(".section").forEach(s=>s.classList.add("hidden"));
+// OPEN SECTION
+function openSection(id){
+  ["arduino","robotics","iot"].forEach(s=>{
+    document.getElementById(s).classList.add("hidden");
+  });
   document.getElementById(id).classList.remove("hidden");
 }
 
-/* CODE TOGGLE */
-function toggleCode(el){
-  let pre=el.querySelector("pre");
-  pre.style.display = pre.style.display==="block" ? "none" : "block";
+// SAVE CODE
+function saveCode(id){
+  localStorage.setItem(id,document.getElementById(id).value);
+  alert("Code Saved");
 }
 
-/* SEARCH */
-function searchCode(){
-  let q=document.getElementById("search").value.toLowerCase();
-  document.querySelectorAll(".code-item").forEach(i=>{
-    i.style.display=i.innerText.toLowerCase().includes(q)?"block":"none";
+// LOAD MEMORY
+function loadCodes(){
+  ["arduinoCode","roboticsCode","iotCode"].forEach(id=>{
+    document.getElementById(id).value = localStorage.getItem(id)||"";
   });
 }
+
+// CHANGE PASSWORD
+function changePassword(){
+  let n=document.getElementById("newPass").value;
+  if(n.length<4){alert("Password too short");return;}
+  localStorage.setItem("ownerPass",n);
+  alert("Password Updated");
+}
+
+// LOGOUT
+function logout(){location.reload();}
 </script>
 
 </body>

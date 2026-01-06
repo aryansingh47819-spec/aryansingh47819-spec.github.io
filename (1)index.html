@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Aryan Robotics Control</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: #facc15;
+}
+
+.container {
+    max-width: 420px;
+    margin: 60px auto;
+    background: #020617;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #facc15;
+}
+
+h2 {
+    text-align: center;
+}
+
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+}
+
+input {
+    background: #020617;
+    color: #facc15;
+    border: 1px solid #facc15;
+}
+
+button {
+    background: #facc15;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #fde047;
+}
+
+.hidden {
+    display: none;
+}
+
+.panel button {
+    margin-top: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="container" id="loginBox">
+    <h2>Owner Login</h2>
+    <input type="password" id="loginPass" placeholder="Enter Password">
+    <button onclick="login()">Login</button>
+</div>
+
+<!-- MAIN PANEL -->
+<div class="container hidden" id="panel">
+    <h2>Aryan Robotics & IoT</h2>
+
+    <div class="panel">
+        <button onclick="openSection('arduino')">Arduino Control</button>
+        <button onclick="openSection('robotics')">Robotics System</button>
+        <button onclick="openSection('iot')">IoT Dashboard</button>
+    </div>
+
+    <div id="content" style="margin-top:15px;"></div>
+</div>
+
+<script>
+function login() {
+    const pass = document.getElementById("loginPass").value;
+
+    if (pass === "aryanSingh(8") {
+        document.getElementById("loginBox").classList.add("hidden");
+        document.getElementById("panel").classList.remove("hidden");
+    } else {
+        alert("Wrong Password ❌");
+    }
+}
+
+function openSection(section) {
+    let content = document.getElementById("content");
+
+    if (section === "arduino") {
+        content.innerHTML = `
+            <h3>Arduino Control</h3>
+            <p>• LED ON / OFF</p>
+            <p>• Motor Control</p>
+            <p>• Sensor Monitoring</p>
+        `;
+    }
+
+    if (section === "robotics") {
+        content.innerHTML = `
+            <h3>Robotics System</h3>
+            <p>• Robot Movement</p>
+            <p>• Arm Control</p>
+            <p>• AI Navigation</p>
+        `;
+    }
+
+    if (section === "iot") {
+        content.innerHTML = `
+            <h3>IoT Dashboard</h3>
+            <p>• Live Data</p>
+            <p>• Cloud Sync</p>
+            <p>• Remote Control</p>
+        `;
+    }
+}
+</script>
+
+</body>
+</html>

@@ -3,281 +3,228 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Code Vault – Arduino | Robotics | IoT</title>
+<title>Aryan Codes Hub</title>
 
 <style>
+:root{
+  --bg:#0f172a;
+  --card:#020617;
+  --accent:#facc15;
+  --text:#e5e7eb;
+}
+
+*{box-sizing:border-box}
+
 body{
   margin:0;
-  font-family:Arial, sans-serif;
-  background:#020617;
-  color:#e5e7eb;
+  font-family:system-ui,Arial;
+  background:linear-gradient(135deg,#020617,#0f172a);
+  color:var(--text);
 }
+
 header{
   text-align:center;
-  padding:20px;
-  font-size:26px;
-  font-weight:bold;
-  color:#facc15;
+  padding:25px;
+  font-size:28px;
+  font-weight:700;
+  color:var(--accent);
 }
-.controls{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  justify-content:center;
-  margin-bottom:20px;
-}
-.controls button{
-  padding:10px 18px;
-  border:none;
-  border-radius:8px;
-  background:#38bdf8;
-  color:#020617;
-  font-weight:bold;
-  cursor:pointer;
-}
-.controls input{
-  padding:10px;
-  width:250px;
-  border-radius:8px;
-  border:none;
-}
+
 .container{
-  max-width:1100px;
+  max-width:1000px;
   margin:auto;
   padding:15px;
 }
-.project{
-  background:#020617;
-  border:1px solid #facc15;
+
+.card{
+  background:var(--card);
   border-radius:14px;
-  padding:18px;
+  padding:20px;
   margin-bottom:20px;
+  box-shadow:0 0 20px rgba(250,204,21,.25);
 }
-.project h3{ color:#facc15; }
-.components{
-  margin:10px 0;
-  padding:10px;
-  border-left:4px solid #38bdf8;
-}
-.code{
-  background:#020617;
-  border:1px solid #38bdf8;
+
+button{
+  background:var(--accent);
+  color:#000;
+  border:none;
+  padding:12px 18px;
   border-radius:10px;
-  padding:15px;
+  font-weight:700;
+  cursor:pointer;
+  margin:5px;
+}
+
+button:hover{opacity:.9}
+
+.hidden{display:none}
+
+input,textarea{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid var(--accent);
+  background:#020617;
+  color:var(--accent);
+  font-size:15px;
+}
+
+textarea{
+  min-height:160px;
+  font-family:monospace;
+}
+
+select{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid var(--accent);
+  background:#020617;
+  color:var(--accent);
+}
+
+.section-btns button{
+  width:100%;
+  margin-top:10px;
+}
+
+.code-box{
+  background:#020617;
+  border:1px solid var(--accent);
+  border-radius:10px;
+  padding:12px;
+  margin-top:12px;
   white-space:pre-wrap;
   font-family:monospace;
   color:#facc15;
 }
-.hidden{ display:none; }
+
+footer{
+  text-align:center;
+  padding:20px;
+  color:#94a3b8;
+  font-size:14px;
+}
 </style>
 </head>
 
 <body>
 
-<header>🚀 Arduino • Robotics • IoT – Code Vault</header>
-
-<div class="controls">
-  <button onclick="filterProjects('all')">ALL</button>
-  <button onclick="filterProjects('arduino')">ARDUINO</button>
-  <button onclick="filterProjects('robotics')">ROBOTICS</button>
-  <button onclick="filterProjects('iot')">IOT</button>
-  <input type="text" id="search" placeholder="Search Project..." onkeyup="searchProject()">
-</div>
+<header>🚀 Aryan Arduino • Robotics • IoT Codes</header>
 
 <div class="container">
 
-<!-- ================= ARDUINO ================= -->
-
-<div class="project arduino">
-<h3>Fire Alarm System</h3>
-<div class="components"><b>Components:</b> Arduino, Flame Sensor, Buzzer</div>
-<div class="code">
-int flame=2, buzzer=8;
-void setup(){ pinMode(flame,INPUT); pinMode(buzzer,OUTPUT); }
-void loop(){
- if(digitalRead(flame)==LOW) digitalWrite(buzzer,HIGH);
- else digitalWrite(buzzer,LOW);
-}
-</div>
+<!-- 🔐 OWNER LOGIN -->
+<div class="card" id="loginBox">
+  <h2>Owner Login</h2>
+  <input type="password" id="loginPass" placeholder="Enter Owner Password">
+  <button onclick="login()">Login</button>
 </div>
 
-<div class="project arduino">
-<h3>Fire Extinguisher Truck</h3>
-<div class="components"><b>Components:</b> Arduino, Flame Sensor, Relay, Water Pump</div>
-<div class="code">
-int flame=2, pump=4;
-void setup(){ pinMode(flame,INPUT); pinMode(pump,OUTPUT); }
-void loop(){
- if(digitalRead(flame)==LOW) digitalWrite(pump,HIGH);
- else digitalWrite(pump,LOW);
-}
-</div>
+<!-- 👑 OWNER PANEL -->
+<div class="card hidden" id="ownerPanel">
+  <h2>Owner Control Panel</h2>
+
+  <input id="codeTitle" placeholder="Project / Code Name">
+  <textarea id="codeData" placeholder="Paste Arduino code here"></textarea>
+
+  <select id="category">
+    <option value="arduino">Arduino</option>
+    <option value="robotics">Robotics</option>
+    <option value="iot">IoT</option>
+  </select>
+
+  <button onclick="addCode()">Upload Code</button>
+  <button onclick="logout()" style="background:red;color:white">Logout</button>
 </div>
 
-<div class="project arduino">
-<h3>Radar System</h3>
-<div class="components"><b>Components:</b> Arduino, Ultrasonic Sensor, Servo Motor</div>
-<div class="code">
-#include <Servo.h>
-Servo radar;
-int trig=2, echo=3;
-void setup(){
- radar.attach(9);
- pinMode(trig,OUTPUT); pinMode(echo,INPUT);
- Serial.begin(9600);
-}
-void loop(){
- for(int i=0;i<=180;i++){ radar.write(i); delay(20); Serial.println(dist()); }
- for(int i=180;i>=0;i--){ radar.write(i); delay(20); Serial.println(dist()); }
-}
-int dist(){
- digitalWrite(trig,LOW); delayMicroseconds(2);
- digitalWrite(trig,HIGH); delayMicroseconds(10);
- digitalWrite(trig,LOW);
- long d=pulseIn(echo,HIGH,30000);
- if(d==0) return -1;
- return d*0.034/2;
-}
-</div>
+<!-- 🔍 SEARCH BAR (NEW – ADDED ONLY) -->
+<div class="card">
+  <input id="searchBox" placeholder="🔍 Search code by name..." oninput="searchCode()">
 </div>
 
-<div class="project arduino">
-<h3>AI Teacher (Serial Based)</h3>
-<div class="components"><b>Components:</b> Arduino, USB Cable</div>
-<div class="code">
-int q=0;
-void setup(){
- Serial.begin(9600);
- Serial.println("AI Teacher Ready");
-}
-void loop(){
- if(Serial.available()){
- int a=Serial.parseInt();
- if(q==0 && a==8){Serial.println("Correct");q++;}
- else if(q==1 && a==6){Serial.println("Correct");q++;}
- else if(q==2 && a==12){Serial.println("Done"); while(1);}
- else Serial.println("Wrong");
- ask();
- }
-}
-void ask(){
- if(q==0) Serial.println("5+3?");
- else if(q==1) Serial.println("10-4?");
- else if(q==2) Serial.println("6*2?");
-}
-</div>
+<!-- 📂 CATEGORY BUTTONS -->
+<div class="card">
+  <div class="section-btns">
+    <button onclick="show('arduino')">Arduino</button>
+    <button onclick="show('robotics')">Robotics</button>
+    <button onclick="show('iot')">IoT</button>
+  </div>
 </div>
 
-<!-- ================= ROBOTICS ================= -->
-
-<div class="project robotics">
-<h3>Dancing Robot</h3>
-<div class="components"><b>Components:</b> Arduino, L298N, DC Motors</div>
-<div class="code">
-int ENA=5,IN1=6,IN2=7,ENB=9,IN3=10,IN4=11;
-void setup(){
- pinMode(ENA,OUTPUT); pinMode(IN1,OUTPUT); pinMode(IN2,OUTPUT);
- pinMode(ENB,OUTPUT); pinMode(IN3,OUTPUT); pinMode(IN4,OUTPUT);
-}
-void loop(){
- forward(); delay(500);
- left(); delay(400);
- right(); delay(400);
- back(); delay(500);
- stopBot(); delay(600);
-}
-void forward(){IN1=HIGH;IN2=LOW;IN3=HIGH;IN4=LOW;}
-void back(){digitalWrite(IN1,LOW);digitalWrite(IN2,HIGH);digitalWrite(IN3,LOW);digitalWrite(IN4,HIGH);}
-void left(){digitalWrite(IN1,LOW);digitalWrite(IN2,HIGH);digitalWrite(IN3,HIGH);digitalWrite(IN4,LOW);}
-void right(){digitalWrite(IN1,HIGH);digitalWrite(IN2,LOW);digitalWrite(IN3,LOW);digitalWrite(IN4,HIGH);}
-void stopBot(){digitalWrite(IN1,0);digitalWrite(IN2,0);digitalWrite(IN3,0);digitalWrite(IN4,0);}
-</div>
-</div>
-
-<div class="project robotics">
-<h3>Obstacle Avoiding Robot</h3>
-<div class="components"><b>Components:</b> Arduino, Ultrasonic, Motors, Driver</div>
-<div class="code">
-int trig=2,echo=3;
-int IN1=6,IN2=7,IN3=10,IN4=11;
-void setup(){
- pinMode(trig,OUTPUT); pinMode(echo,INPUT);
- pinMode(IN1,OUTPUT); pinMode(IN2,OUTPUT);
- pinMode(IN3,OUTPUT); pinMode(IN4,OUTPUT);
-}
-void loop(){
- long d=dist();
- if(d>0 && d<20) right();
- else forward();
-}
-long dist(){
- digitalWrite(trig,LOW);delayMicroseconds(2);
- digitalWrite(trig,HIGH);delayMicroseconds(10);
- digitalWrite(trig,LOW);
- long t=pulseIn(echo,HIGH,30000);
- if(t==0) return -1;
- return t*0.034/2;
-}
-void forward(){digitalWrite(IN1,1);digitalWrite(IN2,0);digitalWrite(IN3,1);digitalWrite(IN4,0);}
-void right(){digitalWrite(IN1,1);digitalWrite(IN2,0);digitalWrite(IN3,0);digitalWrite(IN4,1);}
-</div>
-</div>
-
-<!-- ================= IOT ================= -->
-
-<div class="project iot">
-<h3>Smart Gas Leakage Detection</h3>
-<div class="components"><b>Components:</b> Arduino, MQ Gas Sensor, Buzzer</div>
-<div class="code">
-int gas=A0,buzzer=9;
-void setup(){ pinMode(buzzer,OUTPUT); }
-void loop(){
- if(analogRead(gas)>400) digitalWrite(buzzer,HIGH);
- else digitalWrite(buzzer,LOW);
-}
-</div>
-</div>
-
-<div class="project iot">
-<h3>Smart Flood Alert</h3>
-<div class="components"><b>Components:</b> Arduino, Water Sensor, Buzzer</div>
-<div class="code">
-int water=A0,buzzer=8;
-void setup(){ pinMode(buzzer,OUTPUT); }
-void loop(){
- if(analogRead(water)>500) digitalWrite(buzzer,HIGH);
- else digitalWrite(buzzer,LOW);
-}
-</div>
-</div>
-
-<div class="project iot">
-<h3>Women Safety Device</h3>
-<div class="components"><b>Components:</b> Arduino, Push Button, Buzzer</div>
-<div class="code">
-int btn=2,buzzer=8;
-void setup(){ pinMode(btn,INPUT_PULLUP); pinMode(buzzer,OUTPUT); }
-void loop(){
- if(digitalRead(btn)==LOW) digitalWrite(buzzer,HIGH);
- else digitalWrite(buzzer,LOW);
-}
-</div>
+<!-- 📄 CONTENT -->
+<div class="card" id="content">
+  <h3>Select a category to view codes</h3>
 </div>
 
 </div>
+
+<footer>
+Made by <b>Aryan Singh</b> | Help of Python • JavaScript • Termux
+</footer>
 
 <script>
-function filterProjects(type){
- document.querySelectorAll('.project').forEach(p=>{
-  p.classList.remove('hidden');
-  if(type!='all' && !p.classList.contains(type)) p.classList.add('hidden');
- });
+/* 🔐 PASSWORD MEMORY */
+if(!localStorage.getItem("ownerPass")){
+  localStorage.setItem("ownerPass","aryansingh(8928)");
 }
-function searchProject(){
- let q=document.getElementById('search').value.toLowerCase();
- document.querySelectorAll('.project').forEach(p=>{
-  p.style.display=p.innerText.toLowerCase().includes(q)?'block':'none';
- });
+
+function login(){
+  if(loginPass.value === localStorage.getItem("ownerPass")){
+    loginBox.classList.add("hidden");
+    ownerPanel.classList.remove("hidden");
+  }else alert("Wrong password");
+}
+
+function logout(){location.reload()}
+
+function getData(){
+  return JSON.parse(localStorage.getItem("codes")||'{"arduino":[],"robotics":[],"iot":[]}');
+}
+
+function saveData(d){
+  localStorage.setItem("codes",JSON.stringify(d));
+}
+
+function addCode(){
+  if(!codeTitle.value || !codeData.value){
+    alert("Title & Code required");
+    return;
+  }
+  let d=getData();
+  d[category.value].push({t:codeTitle.value,c:codeData.value});
+  saveData(d);
+  codeTitle.value=codeData.value="";
+  alert("Code Uploaded Successfully");
+}
+
+function show(cat){
+  let d=getData();
+  content.innerHTML=`<h2>${cat.toUpperCase()} PROJECTS</h2>`;
+  d[cat].forEach(x=>{
+    content.innerHTML+=`
+      <h3>${x.t}</h3>
+      <div class="code-box">${x.c}</div>
+    `;
+  });
+}
+
+function searchCode(){
+  let q = searchBox.value.toLowerCase();
+  let d = getData();
+  content.innerHTML="<h2>Search Results</h2>";
+  ["arduino","robotics","iot"].forEach(cat=>{
+    d[cat].forEach(x=>{
+      if(x.t.toLowerCase().includes(q)){
+        content.innerHTML+=`
+          <h3>${x.t} <small>(${cat})</small></h3>
+          <div class="code-box">${x.c}</div>
+        `;
+      }
+    });
+  });
 }
 </script>
 

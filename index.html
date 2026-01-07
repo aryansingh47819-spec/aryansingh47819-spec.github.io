@@ -3,160 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aryan Codes Hub</title>
+<title>Aryan Robotics & IoT Codes</title>
 
 <style>
-:root{
-  --bg:#0f172a;
-  --card:#020617;
-  --accent:#facc15;
-  --text:#e5e7eb;
-}
-
-*{box-sizing:border-box}
-
 body{
   margin:0;
   font-family:system-ui,Arial;
-  background:linear-gradient(135deg,#020617,#0f172a);
-  color:var(--text);
+  background:#020617;
+  color:#e5e7eb;
 }
-
 header{
   text-align:center;
-  padding:25px;
-  font-size:28px;
-  font-weight:700;
-  color:var(--accent);
+  padding:20px;
 }
-
+header img{
+  width:120px;
+}
+h1{
+  color:#facc15;
+  margin:10px 0;
+}
 .container{
   max-width:1000px;
   margin:auto;
   padding:15px;
 }
-
-.card{
-  background:var(--card);
+.box{
+  background:#020617;
+  border:1px solid #facc15;
   border-radius:14px;
   padding:20px;
   margin-bottom:20px;
-  box-shadow:0 0 20px rgba(250,204,21,.25);
 }
-
 button{
-  background:var(--accent);
-  color:#000;
-  border:none;
-  padding:12px 18px;
-  border-radius:10px;
+  width:100%;
+  padding:12px;
+  margin:8px 0;
   font-weight:700;
-  cursor:pointer;
-  margin:5px;
-}
-
-button:hover{opacity:.9}
-
-.hidden{display:none}
-
-input,textarea{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border-radius:8px;
-  border:1px solid var(--accent);
-  background:#020617;
-  color:var(--accent);
-  font-size:15px;
-}
-
-textarea{
-  min-height:160px;
-  font-family:monospace;
-}
-
-select{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border-radius:8px;
-  border:1px solid var(--accent);
-  background:#020617;
-  color:var(--accent);
-}
-
-.section-btns button{
-  width:100%;
-  margin-top:10px;
-}
-
-.code-box{
-  background:#020617;
-  border:1px solid var(--accent);
+  border:none;
   border-radius:10px;
+  background:#facc15;
+  color:#000;
+  cursor:pointer;
+}
+input{
+  width:100%;
   padding:12px;
-  margin-top:12px;
+  border-radius:8px;
+  border:1px solid #facc15;
+  background:#020617;
+  color:#facc15;
+  margin-bottom:10px;
+}
+.code{
+  background:#000;
+  border:1px solid #facc15;
+  padding:15px;
+  border-radius:10px;
   white-space:pre-wrap;
   font-family:monospace;
   color:#facc15;
 }
-
 footer{
   text-align:center;
   padding:20px;
   color:#94a3b8;
   font-size:14px;
 }
+a{color:#facc15;text-decoration:none}
 </style>
 </head>
 
 <body>
 
-<header>🚀 Aryan Arduino • Robotics • IoT Codes</header>
+<header>
+  <img src="dino.png" alt="Dino">
+  <h1>Aryan Arduino • Robotics • IoT</h1>
+</header>
 
 <div class="container">
 
-<!-- 🔐 OWNER LOGIN -->
-<div class="card" id="loginBox">
-  <h2>Owner Login</h2>
-  <input type="password" id="loginPass" placeholder="Enter Owner Password">
-  <button onclick="login()">Login</button>
+<!-- GOOGLE SEARCH -->
+<div class="box">
+  <form action="https://www.google.com/search" method="get" target="_blank">
+    <input name="q" placeholder="🌍 Google Search anything..." required>
+    <button type="submit">Search on Google</button>
+  </form>
 </div>
 
-<!-- 👑 OWNER PANEL -->
-<div class="card hidden" id="ownerPanel">
-  <h2>Owner Control Panel</h2>
-
-  <input id="codeTitle" placeholder="Project / Code Name">
-  <textarea id="codeData" placeholder="Paste Arduino code here"></textarea>
-
-  <select id="category">
-    <option value="arduino">Arduino</option>
-    <option value="robotics">Robotics</option>
-    <option value="iot">IoT</option>
-  </select>
-
-  <button onclick="addCode()">Upload Code</button>
-  <button onclick="logout()" style="background:red;color:white">Logout</button>
+<!-- SITE SEARCH -->
+<div class="box">
+  <input id="search" placeholder="🔍 Search project here..." onkeyup="filterCode()">
 </div>
 
-<!-- 🔍 SEARCH BAR (NEW – ADDED ONLY) -->
-<div class="card">
-  <input id="searchBox" placeholder="🔍 Search code by name..." oninput="searchCode()">
+<!-- CATEGORY -->
+<div class="box">
+  <button onclick="show('arduino')">Arduino Codes</button>
+  <button onclick="show('robotics')">Robotics Codes</button>
+  <button onclick="show('iot')">IoT Codes</button>
 </div>
 
-<!-- 📂 CATEGORY BUTTONS -->
-<div class="card">
-  <div class="section-btns">
-    <button onclick="show('arduino')">Arduino</button>
-    <button onclick="show('robotics')">Robotics</button>
-    <button onclick="show('iot')">IoT</button>
-  </div>
-</div>
-
-<!-- 📄 CONTENT -->
-<div class="card" id="content">
-  <h3>Select a category to view codes</h3>
+<!-- CONTENT -->
+<div class="box" id="content">
+  <h3>Select category</h3>
 </div>
 
 </div>
@@ -166,65 +115,87 @@ Made by <b>Aryan Singh</b> | Help of Python • JavaScript • Termux
 </footer>
 
 <script>
-/* 🔐 PASSWORD MEMORY */
-if(!localStorage.getItem("ownerPass")){
-  localStorage.setItem("ownerPass","aryansingh(8928)");
+const data = {
+arduino:[
+{
+title:"Fire Alarm System",
+code:`// FIRE ALARM SYSTEM
+int flame=2;
+int buzzer=8;
+void setup(){
+ pinMode(flame,INPUT);
+ pinMode(buzzer,OUTPUT);
 }
-
-function login(){
-  if(loginPass.value === localStorage.getItem("ownerPass")){
-    loginBox.classList.add("hidden");
-    ownerPanel.classList.remove("hidden");
-  }else alert("Wrong password");
+void loop(){
+ if(digitalRead(flame)==LOW)
+  digitalWrite(buzzer,HIGH);
+ else
+  digitalWrite(buzzer,LOW);
+}`
 }
+],
 
-function logout(){location.reload()}
-
-function getData(){
-  return JSON.parse(localStorage.getItem("codes")||'{"arduino":[],"robotics":[],"iot":[]}');
+robotics:[
+{
+title:"Smart Blind Stick",
+code:`// SMART BLIND STICK
+int trig=2, echo=3, buzzer=8;
+long d; int dist;
+void setup(){
+ pinMode(trig,OUTPUT);
+ pinMode(echo,INPUT);
+ pinMode(buzzer,OUTPUT);
 }
-
-function saveData(d){
-  localStorage.setItem("codes",JSON.stringify(d));
+void loop(){
+ digitalWrite(trig,LOW); delayMicroseconds(2);
+ digitalWrite(trig,HIGH); delayMicroseconds(10);
+ digitalWrite(trig,LOW);
+ d=pulseIn(echo,HIGH);
+ dist=d*0.034/2;
+ if(dist>0 && dist<30)
+  digitalWrite(buzzer,HIGH);
+ else
+  digitalWrite(buzzer,LOW);
+}`
 }
+],
 
-function addCode(){
-  if(!codeTitle.value || !codeData.value){
-    alert("Title & Code required");
-    return;
-  }
-  let d=getData();
-  d[category.value].push({t:codeTitle.value,c:codeData.value});
-  saveData(d);
-  codeTitle.value=codeData.value="";
-  alert("Code Uploaded Successfully");
+iot:[
+{
+title:"Smart Gas Leakage",
+code:`// GAS LEAKAGE DETECTION
+int gas=A0;
+int buzzer=9;
+void setup(){
+ pinMode(buzzer,OUTPUT);
 }
+void loop(){
+ if(analogRead(gas)>400)
+  digitalWrite(buzzer,HIGH);
+ else
+  digitalWrite(buzzer,LOW);
+}`
+}
+]
+};
 
 function show(cat){
-  let d=getData();
-  content.innerHTML=`<h2>${cat.toUpperCase()} PROJECTS</h2>`;
-  d[cat].forEach(x=>{
-    content.innerHTML+=`
-      <h3>${x.t}</h3>
-      <div class="code-box">${x.c}</div>
-    `;
-  });
+ const c=document.getElementById("content");
+ c.innerHTML="";
+ data[cat].forEach(x=>{
+  c.innerHTML+=`<h3>${x.title}</h3><div class="code">${x.code}</div>`;
+ });
 }
 
-function searchCode(){
-  let q = searchBox.value.toLowerCase();
-  let d = getData();
-  content.innerHTML="<h2>Search Results</h2>";
-  ["arduino","robotics","iot"].forEach(cat=>{
-    d[cat].forEach(x=>{
-      if(x.t.toLowerCase().includes(q)){
-        content.innerHTML+=`
-          <h3>${x.t} <small>(${cat})</small></h3>
-          <div class="code-box">${x.c}</div>
-        `;
-      }
-    });
-  });
+function filterCode(){
+ let q=document.getElementById("search").value.toLowerCase();
+ const c=document.getElementById("content");
+ c.innerHTML="";
+ Object.values(data).flat().forEach(x=>{
+  if(x.title.toLowerCase().includes(q)){
+   c.innerHTML+=`<h3>${x.title}</h3><div class="code">${x.code}</div>`;
+  }
+ });
 }
 </script>
 

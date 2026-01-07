@@ -2,110 +2,104 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Aryan Arduino • Robotics • IoT Codes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aryan Robotics & IoT Codes</title>
 
 <style>
 body{
-  margin:0;
-  font-family:system-ui,Arial;
-  background:#020617;
-  color:#e5e7eb;
+ margin:0;
+ background:#020617;
+ color:#e5e7eb;
+ font-family:system-ui,Arial;
 }
 header{
-  text-align:center;
-  padding:20px;
+ text-align:center;
+ padding:20px;
 }
-header img{
-  width:120px;
-}
-h1{
-  color:#facc15;
-  margin:10px 0;
-}
+header img{width:120px}
+h1{color:#facc15}
 .container{
-  max-width:1000px;
-  margin:auto;
-  padding:15px;
+ max-width:1100px;
+ margin:auto;
+ padding:15px;
 }
 .box{
-  background:#020617;
-  border:1px solid #facc15;
-  border-radius:14px;
-  padding:20px;
-  margin-bottom:20px;
+ border:1px solid #facc15;
+ border-radius:14px;
+ padding:20px;
+ margin-bottom:20px;
+ background:#020617;
 }
 button{
-  width:100%;
-  padding:12px;
-  margin:8px 0;
-  font-weight:700;
-  border:none;
-  border-radius:10px;
-  background:#facc15;
-  color:#000;
-  cursor:pointer;
+ width:100%;
+ padding:12px;
+ margin:6px 0;
+ font-weight:700;
+ border:none;
+ border-radius:10px;
+ background:#facc15;
+ cursor:pointer;
 }
 input{
-  width:100%;
-  padding:12px;
-  border-radius:8px;
-  border:1px solid #facc15;
-  background:#020617;
-  color:#facc15;
-  margin-bottom:10px;
+ width:100%;
+ padding:12px;
+ border-radius:8px;
+ border:1px solid #facc15;
+ background:#020617;
+ color:#facc15;
+ margin-bottom:10px;
 }
 .code{
-  background:#000;
-  border:1px solid #facc15;
-  padding:15px;
-  border-radius:10px;
-  white-space:pre-wrap;
-  font-family:monospace;
-  color:#facc15;
+ background:#000;
+ border:1px solid #facc15;
+ padding:15px;
+ border-radius:10px;
+ white-space:pre-wrap;
+ font-family:monospace;
+ color:#facc15;
+ margin-bottom:20px;
 }
 footer{
-  text-align:center;
-  padding:20px;
-  color:#94a3b8;
-  font-size:14px;
+ text-align:center;
+ padding:20px;
+ color:#94a3b8;
+ font-size:14px;
 }
-a{color:#facc15;text-decoration:none}
 </style>
 </head>
 
 <body>
 
 <header>
-  <img src="dino.png" alt="Dino">
-  <h1>Aryan Arduino • Robotics • IoT</h1>
+ <img src="dino.png">
+ <h1>Aryan Arduino • Robotics • IoT</h1>
 </header>
 
 <div class="container">
 
 <!-- GOOGLE SEARCH -->
 <div class="box">
-  <form action="https://www.google.com/search" method="get" target="_blank">
-    <input name="q" placeholder="🌍 Google Search anything..." required>
-    <button type="submit">Search on Google</button>
-  </form>
+<form action="https://www.google.com/search" method="get" target="_blank">
+<input name="q" placeholder="🌍 Google Search..." required>
+<button>Search on Google</button>
+</form>
 </div>
 
 <!-- SITE SEARCH -->
 <div class="box">
-  <input id="search" placeholder="🔍 Search project here..." onkeyup="filterCode()">
+<input id="search" placeholder="🔍 Search project..." onkeyup="filterAll()">
 </div>
 
-<!-- CATEGORY -->
+<!-- BUTTONS -->
 <div class="box">
-  <button onclick="show('arduino')">Arduino Codes</button>
-  <button onclick="show('robotics')">Robotics Codes</button>
-  <button onclick="show('iot')">IoT Codes</button>
+<button onclick="show('arduino')">Arduino Codes</button>
+<button onclick="show('robotics')">Robotics Codes</button>
+<button onclick="show('iot')">IoT Codes</button>
 </div>
 
 <!-- CONTENT -->
 <div class="box" id="content">
-  <h3>Select category</h3>
+<h3>Select category</h3>
 </div>
 
 </div>
@@ -115,86 +109,133 @@ Made by <b>Aryan Singh</b> | Help of Python • JavaScript • Termux
 </footer>
 
 <script>
-const data = {
+const data={
 arduino:[
-{
-title:"Fire Alarm System",
-code:`// FIRE ALARM SYSTEM
-int flame=2;
-int buzzer=8;
+{t:"Fire Alarm System",c:`// FIRE ALARM SYSTEM
+int flame=2,buzzer=8;
+void setup(){pinMode(flame,INPUT);pinMode(buzzer,OUTPUT);}
+void loop(){
+ if(digitalRead(flame)==LOW)digitalWrite(buzzer,HIGH);
+ else digitalWrite(buzzer,LOW);
+}`},
+
+{t:"Fire Extinguisher Truck",c:`// FIRE EXTINGUISHER TRUCK
+int flame=2,pump=4;
+void setup(){pinMode(flame,INPUT);pinMode(pump,OUTPUT);}
+void loop(){
+ if(digitalRead(flame)==LOW)digitalWrite(pump,HIGH);
+ else digitalWrite(pump,LOW);
+}`},
+
+{t:"Simple AI Teacher",c:`// SIMPLE AI TEACHER
+int q=0;
 void setup(){
- pinMode(flame,INPUT);
- pinMode(buzzer,OUTPUT);
+ Serial.begin(9600);
+ Serial.println("AI Teacher Ready");
 }
 void loop(){
- if(digitalRead(flame)==LOW)
-  digitalWrite(buzzer,HIGH);
- else
-  digitalWrite(buzzer,LOW);
-}`
-}
+ if(Serial.available()){
+ int a=Serial.parseInt();
+ if(q==0&&a==8||q==1&&a==6||q==2&&a==12){Serial.println("Correct");q++;}
+ else Serial.println("Wrong");
+ }
+}`}
 ],
 
 robotics:[
-{
-title:"Smart Blind Stick",
-code:`// SMART BLIND STICK
-int trig=2, echo=3, buzzer=8;
-long d; int dist;
+{t:"Army Line Follower",c:`// ARMY LINE FOLLOWER
+int L=2,R=3;
+int ENA=5,IN1=6,IN2=7;
+int ENB=9,IN3=10,IN4=11;
 void setup(){
- pinMode(trig,OUTPUT);
- pinMode(echo,INPUT);
- pinMode(buzzer,OUTPUT);
+ pinMode(L,INPUT);pinMode(R,INPUT);
+ pinMode(ENA,OUTPUT);pinMode(IN1,OUTPUT);pinMode(IN2,OUTPUT);
+ pinMode(ENB,OUTPUT);pinMode(IN3,OUTPUT);pinMode(IN4,OUTPUT);
+ analogWrite(ENA,150);analogWrite(ENB,150);
 }
 void loop(){
- digitalWrite(trig,LOW); delayMicroseconds(2);
- digitalWrite(trig,HIGH); delayMicroseconds(10);
- digitalWrite(trig,LOW);
- d=pulseIn(echo,HIGH);
- dist=d*0.034/2;
- if(dist>0 && dist<30)
-  digitalWrite(buzzer,HIGH);
- else
-  digitalWrite(buzzer,LOW);
-}`
+ if(!digitalRead(L)&&!digitalRead(R))forward();
+ else if(digitalRead(L))right();
+ else if(digitalRead(R))left();
+ else stopBot();
 }
+void forward(){digitalWrite(IN1,1);digitalWrite(IN2,0);digitalWrite(IN3,1);digitalWrite(IN4,0);}
+void left(){digitalWrite(IN1,0);digitalWrite(IN2,1);digitalWrite(IN3,1);digitalWrite(IN4,0);}
+void right(){digitalWrite(IN1,1);digitalWrite(IN2,0);digitalWrite(IN3,0);digitalWrite(IN4,1);}
+void stopBot(){digitalWrite(IN1,0);digitalWrite(IN2,0);digitalWrite(IN3,0);digitalWrite(IN4,0);}`},
+
+{t:"Dancing Robot",c:`// DANCING ROBOT
+int IN1=6,IN2=7,IN3=10,IN4=11;
+void setup(){
+ pinMode(IN1,1);pinMode(IN2,1);pinMode(IN3,1);pinMode(IN4,1);
+}
+void loop(){
+ forward();delay(500);
+ left();delay(400);
+ right();delay(400);
+ back();delay(500);
+ stopBot();delay(600);
+}
+void forward(){digitalWrite(IN1,1);digitalWrite(IN2,0);digitalWrite(IN3,1);digitalWrite(IN4,0);}
+void back(){digitalWrite(IN1,0);digitalWrite(IN2,1);digitalWrite(IN3,0);digitalWrite(IN4,1);}
+void left(){digitalWrite(IN1,0);digitalWrite(IN2,1);digitalWrite(IN3,1);digitalWrite(IN4,0);}
+void right(){digitalWrite(IN1,1);digitalWrite(IN2,0);digitalWrite(IN3,0);digitalWrite(IN4,1);}
+void stopBot(){digitalWrite(IN1,0);digitalWrite(IN2,0);digitalWrite(IN3,0);digitalWrite(IN4,0);}`},
+
+{t:"Smart Blind Stick",c:`// SMART BLIND STICK
+int t=2,e=3,b=8;
+void setup(){pinMode(t,1);pinMode(e,0);pinMode(b,1);}
+void loop(){
+ digitalWrite(t,0);delayMicroseconds(2);
+ digitalWrite(t,1);delayMicroseconds(10);
+ digitalWrite(t,0);
+ long d=pulseIn(e,1);
+ int dist=d*0.034/2;
+ if(dist>0&&dist<30)digitalWrite(b,1);
+ else digitalWrite(b,0);
+}`}
 ],
 
 iot:[
-{
-title:"Smart Gas Leakage",
-code:`// GAS LEAKAGE DETECTION
-int gas=A0;
-int buzzer=9;
-void setup(){
- pinMode(buzzer,OUTPUT);
-}
+{t:"Gas Leakage Detection",c:`// GAS LEAKAGE
+int gas=A0,b=9;
+void setup(){pinMode(b,1);}
 void loop(){
- if(analogRead(gas)>400)
-  digitalWrite(buzzer,HIGH);
- else
-  digitalWrite(buzzer,LOW);
-}`
-}
+ if(analogRead(gas)>400)digitalWrite(b,1);
+ else digitalWrite(b,0);
+}`},
+
+{t:"Flood Alert System",c:`// FLOOD ALERT
+int water=A0,b=8;
+void setup(){pinMode(b,1);}
+void loop(){
+ if(analogRead(water)>500)digitalWrite(b,1);
+ else digitalWrite(b,0);
+}`},
+
+{t:"Women Safety Device",c:`// WOMEN SAFETY
+int btn=2,b=8;
+void setup(){pinMode(btn,INPUT_PULLUP);pinMode(b,1);}
+void loop(){
+ if(!digitalRead(btn))digitalWrite(b,1);
+ else digitalWrite(b,0);
+}`}
 ]
 };
 
 function show(cat){
- const c=document.getElementById("content");
- c.innerHTML="";
+ let c=document.getElementById("content");c.innerHTML="";
  data[cat].forEach(x=>{
-  c.innerHTML+=`<h3>${x.title}</h3><div class="code">${x.code}</div>`;
+ c.innerHTML+=`<h3>${x.t}</h3><div class="code">${x.c}</div>`;
  });
 }
 
-function filterCode(){
+function filterAll(){
  let q=document.getElementById("search").value.toLowerCase();
- const c=document.getElementById("content");
- c.innerHTML="";
+ let c=document.getElementById("content");c.innerHTML="";
  Object.values(data).flat().forEach(x=>{
-  if(x.title.toLowerCase().includes(q)){
-   c.innerHTML+=`<h3>${x.title}</h3><div class="code">${x.code}</div>`;
-  }
+ if(x.t.toLowerCase().includes(q))
+ c.innerHTML+=`<h3>${x.t}</h3><div class="code">${x.c}</div>`;
  });
 }
 </script>

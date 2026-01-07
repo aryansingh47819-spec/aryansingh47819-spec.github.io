@@ -2,216 +2,182 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Aryan Arduino • Robotics • IoT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aryan Codes Hub</title>
 
 <style>
+:root{
+  --bg:#0f172a;
+  --card:#020617;
+  --accent:#facc15;
+  --text:#e5e7eb;
+}
+
+*{box-sizing:border-box}
+
 body{
   margin:0;
-  font-family:Arial, sans-serif;
-  background:#020617;
-  color:#facc15;
+  font-family:system-ui,Arial;
+  background:linear-gradient(135deg,#020617,#0f172a);
+  color:var(--text);
 }
+
 header{
-  padding:15px;
   text-align:center;
-  font-size:22px;
-  font-weight:bold;
-  background:#020617;
-  box-shadow:0 0 10px #facc15;
-}
-nav{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin:15px;
-}
-nav button{
-  padding:10px 16px;
-  background:#facc15;
-  color:black;
-  border:none;
-  border-radius:6px;
-  font-weight:bold;
-  cursor:pointer;
-}
-nav button:hover{background:#fde047;}
-
-.section{display:none; padding:15px;}
-.section.active{display:block;}
-
-.code-item{
-  border:1px solid #facc15;
-  border-radius:8px;
-  padding:10px;
-  margin-bottom:12px;
-  cursor:pointer;
-}
-.code-item:hover{background:#020617;}
-pre{
-  display:none;
-  background:#020617;
-  padding:10px;
-  overflow:auto;
-  color:#fde047;
+  padding:25px;
+  font-size:28px;
+  font-weight:700;
+  color:var(--accent);
 }
 
-.owner-box{
-  margin:20px auto;
-  max-width:400px;
-  border:1px solid #facc15;
+.container{
+  max-width:900px;
+  margin:auto;
   padding:15px;
-  border-radius:8px;
 }
-input, textarea{
-  width:100%;
-  margin-top:8px;
-  padding:8px;
-  background:#020617;
-  color:#facc15;
-  border:1px solid #facc15;
-  border-radius:5px;
+
+.card{
+  background:var(--card);
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:20px;
+  box-shadow:0 0 20px rgba(250,204,21,.25);
 }
-textarea{min-height:100px;}
-.owner-only{display:none;}
-button.action{
-  margin-top:10px;
-  width:100%;
-  background:#facc15;
-  color:black;
-  padding:10px;
+
+button{
+  background:var(--accent);
+  color:#000;
   border:none;
-  border-radius:5px;
-  font-weight:bold;
+  padding:12px 18px;
+  border-radius:10px;
+  font-weight:700;
   cursor:pointer;
+  margin:5px;
 }
-button.red{background:#ef4444;color:white;}
+
+button:hover{opacity:.9}
+
+.hidden{display:none}
+
+input,textarea{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid var(--accent);
+  background:#020617;
+  color:var(--accent);   /* 👈 typing BLACK नहीं होगा */
+  font-size:15px;
+}
+
+textarea{
+  min-height:160px;
+  font-family:monospace;
+}
+
+.section-btns button{
+  width:100%;
+  margin-top:10px;
+}
+
+.code-box{
+  background:#020617;
+  border:1px solid var(--accent);
+  border-radius:10px;
+  padding:12px;
+  margin-top:12px;
+  white-space:pre-wrap;
+  font-family:monospace;
+  color:#facc15;
+}
 </style>
 </head>
 
 <body>
 
-<header>
-Aryan Singh – Arduino | Robotics | IoT
-</header>
+<header>🚀 Aryan Arduino • Robotics • IoT Codes</header>
 
-<nav>
-  <button onclick="openSection('arduino')">Arduino</button>
-  <button onclick="openSection('robotics')">Robotics</button>
-  <button onclick="openSection('iot')">IoT</button>
-  <button onclick="toggleOwner()">Owner Login</button>
-</nav>
+<div class="container">
 
-<!-- ARDUINO -->
-<div id="arduino" class="section active"></div>
-
-<!-- ROBOTICS -->
-<div id="robotics" class="section"></div>
-
-<!-- IOT -->
-<div id="iot" class="section"></div>
+<!-- OWNER LOGIN -->
+<div class="card" id="loginBox">
+  <h2>Owner Login</h2>
+  <input type="password" id="loginPass" placeholder="Enter Owner Password">
+  <button onclick="login()">Login</button>
+</div>
 
 <!-- OWNER PANEL -->
-<div class="owner-box" id="ownerBox" style="display:none;">
-  <h3>Owner Control Panel</h3>
-  <input type="password" id="ownerPass" placeholder="Owner Password">
-  <button class="action" onclick="loginOwner()">Login</button>
+<div class="card hidden" id="ownerPanel">
+  <h2>Owner Control Panel</h2>
 
-  <div id="ownerPanel" class="owner-only">
-    <select id="category">
-      <option value="arduino">Arduino</option>
-      <option value="robotics">Robotics</option>
-      <option value="iot">IoT</option>
-    </select>
-    <input id="codeTitle" placeholder="Code Title">
-    <textarea id="codeData" placeholder="Paste Code Here"></textarea>
-    <button class="action" onclick="addCode()">Add Code</button>
+  <input id="codeTitle" placeholder="Code Title">
+  <textarea id="codeData" placeholder="Paste your code here"></textarea>
 
-    <input id="newPass" placeholder="New Password">
-    <button class="action" onclick="changePassword()">Change Password</button>
+  <select id="category">
+    <option value="arduino">Arduino</option>
+    <option value="robotics">Robotics</option>
+    <option value="iot">IoT</option>
+  </select>
 
-    <button class="action red" onclick="logout()">Logout</button>
+  <button onclick="addCode()">Upload Code</button>
+  <button onclick="logout()" style="background:red;color:white">Logout</button>
+</div>
+
+<!-- USER VIEW -->
+<div class="card">
+  <div class="section-btns">
+    <button onclick="show('arduino')">Arduino</button>
+    <button onclick="show('robotics')">Robotics</button>
+    <button onclick="show('iot')">IoT</button>
   </div>
 </div>
 
+<div class="card" id="content"></div>
+
+</div>
+
 <script>
-/* ===== PASSWORD MEMORY ===== */
-if(!localStorage.getItem("ownerPassword")){
-  localStorage.setItem("ownerPassword","aryanSingh(8");
+/* PASSWORD MEMORY */
+if(!localStorage.getItem("ownerPass")){
+  localStorage.setItem("ownerPass","aryanSingh(1)8");
 }
 
-/* ===== DATA MEMORY ===== */
-let data = JSON.parse(localStorage.getItem("siteData")) || {
-  arduino:[],
-  robotics:[],
-  iot:[]
-};
-
-function saveData(){
-  localStorage.setItem("siteData",JSON.stringify(data));
+function login(){
+  if(loginPass.value === localStorage.getItem("ownerPass")){
+    loginBox.classList.add("hidden");
+    ownerPanel.classList.remove("hidden");
+  }else alert("Wrong password");
 }
 
-/* ===== UI ===== */
-function openSection(id){
-  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
+function logout(){location.reload()}
+
+function getData(){
+  return JSON.parse(localStorage.getItem("codes")||'{"arduino":[],"robotics":[],"iot":[]}');
 }
 
-function toggleOwner(){
-  let box=document.getElementById("ownerBox");
-  box.style.display = box.style.display==="none"?"block":"none";
+function saveData(d){
+  localStorage.setItem("codes",JSON.stringify(d));
 }
 
-/* ===== OWNER ===== */
-function loginOwner(){
-  let p=document.getElementById("ownerPass").value;
-  if(p===localStorage.getItem("ownerPassword")){
-    document.querySelectorAll(".owner-only").forEach(e=>e.style.display="block");
-    alert("Owner Login Success");
-  }else alert("Wrong Password");
-}
-
-function logout(){
-  document.querySelectorAll(".owner-only").forEach(e=>e.style.display="none");
-}
-
-function changePassword(){
-  let np=document.getElementById("newPass").value;
-  if(np.length<4){alert("Password too short");return;}
-  localStorage.setItem("ownerPassword",np);
-  alert("Password Changed");
-}
-
-/* ===== CODE SYSTEM ===== */
 function addCode(){
-  let cat=document.getElementById("category").value;
-  let title=document.getElementById("codeTitle").value;
-  let code=document.getElementById("codeData").value;
-  if(!title||!code){alert("Fill all fields");return;}
-  data[cat].push({title,code});
-  saveData();
-  render();
-  document.getElementById("codeTitle").value="";
-  document.getElementById("codeData").value="";
+  let d=getData();
+  d[category.value].push({t:codeTitle.value,c:codeData.value});
+  saveData(d);
+  codeTitle.value=codeData.value="";
+  alert("Code Uploaded");
 }
 
-function render(){
-  ["arduino","robotics","iot"].forEach(cat=>{
-    let box=document.getElementById(cat);
-    box.innerHTML="";
-    data[cat].forEach(item=>{
-      let div=document.createElement("div");
-      div.className="code-item";
-      div.innerHTML=item.title+"<pre>"+item.code+"</pre>";
-      div.onclick=()=> {
-        let p=div.querySelector("pre");
-        p.style.display=p.style.display==="block"?"none":"block";
-      };
-      box.appendChild(div);
-    });
+function show(cat){
+  let d=getData();
+  content.innerHTML=`<h2>${cat.toUpperCase()}</h2>`;
+  d[cat].forEach(x=>{
+    content.innerHTML+=`
+      <h3>${x.t}</h3>
+      <div class="code-box">${x.c}</div>
+    `;
   });
 }
-render();
 </script>
 
 </body>
-</html> 
+</html>
